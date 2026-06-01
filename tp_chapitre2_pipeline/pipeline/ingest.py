@@ -1,0 +1,13 @@
+import pandas as pd
+import duckdb
+from pathlib import Path
+
+csv_path = Path("data/ventes.csv")
+db_path = "ventes.duckdb"
+
+print("--- Début de l'ingestion ---")
+df = pd.read_csv(csv_path)
+con = duckdb.connect(db_path)
+con.execute("CREATE OR REPLACE TABLE ventes_raw AS SELECT * FROM df")
+con.close()
+print("Ingestion terminée : table ventes_raw créée.")
